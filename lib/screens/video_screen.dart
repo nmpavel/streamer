@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:streamer/screens/feedback.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-
 
 class VideoScreen extends StatefulWidget {
   final String id;
@@ -92,9 +92,16 @@ class _VideoScreenState extends State<VideoScreen> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>Feedback(String  id)));
-          }, icon: Icon(Icons.thumb_up)),
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => FeedBack(
+                              id: widget.id,
+                            )));
+              },
+              icon: Icon(Icons.thumb_up)),
         ],
       ),
       body: YoutubePlayer(

@@ -2,25 +2,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Feedback extends StatefulWidget {
-  const Feedback({Key key, this.id}) : super(key: key);
+class FeedBack extends StatefulWidget {
+  const FeedBack({Key key, this.id}) : super(key: key);
   final String id;
 
   @override
-  State<Feedback> createState() => _FeedbackState();
+  State<FeedBack> createState() => _FeedBackState();
 }
 
-class _FeedbackState extends State<Feedback> {
+class _FeedBackState extends State<FeedBack> {
   int yesCount = 0;
   int noCount = 0;
 
   @override
   void initState() {
-    getFeedbackCount(id: widget.id);
+    getFeedbackCount();
     super.initState();
   }
 
-  getFeedbackCount({String id}) async {
+  getFeedbackCount() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       yesCount = prefs.getInt('Yes${widget.id}') ?? 0;
@@ -32,7 +32,14 @@ class _FeedbackState extends State<Feedback> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('Number of Yes: $yesCount'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text('Number of Yes: $yesCount'),
+            Text('Number of No: $noCount'),
+          ],
+        ),
       ),
     );
   }
