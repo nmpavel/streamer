@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streamer/models/channel_model.dart';
 import 'package:streamer/models/video_model.dart';
 import 'package:streamer/screens/video_screen.dart';
@@ -83,18 +84,25 @@ class _HomeScreenState extends State<HomeScreen> {
 
   _buildVideo(Video video) {
     return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => VideoScreen(id: video.id),
-        ),
-      ),
+      onTap: () async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        int startPosition = prefs.getInt(video.id);
+
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (ctx) => VideoScreen(
+              id: video.id,
+              startPosition: startPosition,
+            ),
+          ),
+        );
+      },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
         padding: EdgeInsets.all(10.0),
         height: 140.0,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Colors.grey,
           boxShadow: [
             BoxShadow(
               color: Colors.black12,
